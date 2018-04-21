@@ -1,0 +1,6 @@
+hadoop	hello
+hdfs	cat
+cat	hello
+hello	hdfs
+hello	world
+cat	world

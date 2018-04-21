@@ -1,0 +1,151 @@
+package com.lac.codility;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class CodilitySort {
+
+	public static void main(String[] args) {
+		int a[] = {1, 5, 2, 1, 4, 0};
+		//int a[] = {1, 2147483647, 0};
+		int result = numberOfDiscIntersections(a);
+		System.out.println(result);
+	}
+	
+	public static int numberOfDiscIntersections2(int[]a){
+		 int j = 0;
+	        Pair[] arr = new Pair[a.length * 2];
+	        for (int i = 0; i < a.length; i++) {
+	            Pair s = new Pair((long)i - (long)a[i], true);
+	            arr[j] = s;
+	            j++;
+	            Pair e = new Pair((long)i + (long)a[i], false);
+	            arr[j] = e;
+	            j++;
+	        }
+	        Arrays.sort(arr, new Pair(0, true));
+
+	        long numIntersect = 0;
+	        long currentCount = 0;
+	        for (Pair p: arr) {
+	            if (p.start) {
+	                numIntersect += currentCount;
+	                if (numIntersect > 10000000) {
+	                    return -1;
+	                }
+	                currentCount++;
+	            } else {
+	                currentCount--;
+	            }
+	        }
+	        return (int) numIntersect;
+	}
+	
+	
+	  static private class Pair implements Comparator<Pair> {
+	        private long x;
+	        private boolean start;
+	        public Pair(long x, boolean start) {
+	            this.x = x;
+	            this.start = start;
+	        }
+
+	        public int compare(Pair p1, Pair p2) {
+	            if (p1.x < p2.x) {
+	                return -1;
+	            } else if (p1.x > p2.x) {
+	                return 1;
+	            } else {
+	                if (p1.start && p2.start == false) {
+	                    return -1;
+	                } else if (p1.start == false && p2.start) {
+	                    return 1;
+	                } else {
+	                    return 0;
+	                }
+	            }
+	        }
+	    }
+
+	
+	
+	public static int numberOfDiscIntersections(int []a){
+		int length = a.length;
+		int total =0;
+		for(int i=0;i<length;i++){
+			//int radius = a[i];
+			//int leftRange = i-radius;
+			//int rightRange = i+radius;
+			for(int j=i+1;j<length;j++){
+				double range = (double) a[i] + (double)a[j];
+				if(range>=Math.abs(i-j)){
+					total++;
+					if(total>10000000){
+						total = -1;break;
+					}
+				}
+			}
+		}
+		return total;
+	}
+	
+	public static int triangle(int []a){
+		if(null == a || a.length < 3) return 0;
+		Arrays.sort(a);
+		int result = 0;
+		for(int i=0;i<a.length-2;i++){
+			//don't use plus, use minus instead to avaoid overflow
+			if(a[i]>0 && a[i]> a[i+2]-a[i+1]){
+				result = 1;
+			}
+		}
+		return result;
+	}
+	
+	public static int distinct(int[] a){
+		Arrays.sort(a);
+		int length = a.length;
+		int count;
+		if(length==0){
+			count = 0;
+		}else{
+			count = 1;
+			for(int i=1;i<length;i++){
+				if(a[i]!=a[i-1]){
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+	
+	public static int triplet(int []a){
+		int[] maxes = {Integer.MIN_VALUE,Integer.MIN_VALUE,Integer.MIN_VALUE};
+		int[] mins = {Integer.MAX_VALUE,Integer.MAX_VALUE};
+		
+		for(int value: a){
+			if(value>maxes[2]){
+				maxes[0] = maxes[1];
+				maxes[1] = maxes[2];
+				maxes[2] = value;
+			}else if (value > maxes[1]){
+				maxes[0] = maxes[1];
+				maxes[1] = value;
+			}else if(value > maxes[0]){
+				maxes[0] = value;
+			}
+			
+			if(value<mins[0]){
+				mins[1] = mins[0];
+				mins[0] = value;
+			}else if(value<mins[1]){
+				mins[1] = value;
+			}
+		}
+		
+		int positive = maxes[0] * maxes[1] * maxes[2];
+		int negative = mins[0] * mins[1] * maxes[2];
+		int max = Math.max( positive, negative);
+		return max;
+	}
+}

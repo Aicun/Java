@@ -1,0 +1,36 @@
+package com.lac.po;
+
+public class ClassRoom {
+	private int id;
+	private String name;
+	private String grade;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	
+	public ClassRoom(int id, String name, String grade) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.grade = grade;
+	}
+	
+	public ClassRoom(){
+		super();
+	}
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<typeInfoHistroy>
+<typeInfo handle="=MapReduce/D:\/help_doc\/javadev\/hadoop-1.2.1\/hadoop-core-1.2.1.jar&lt;org.apache.hadoop.mapred(MapReduceBase.class[MapReduceBase" modifiers="33" timestamp="1374531998000"/>
+<typeInfo handle="=Hadoop2.6/D:\/help_doc\/javadev\/hadoop-2.6.4\/share\/hadoop\/common\/hadoop-common-2.6.4.jar&lt;org.apache.hadoop.io(WritableComparator.class[WritableComparator" modifiers="33" timestamp="1455271034000"/>
+<typeInfo handle="=Hadoop2.6/D:\/help_doc\/javadev\/hadoop-2.6.4\/share\/hadoop\/mapreduce\/hadoop-mapreduce-client-core-2.6.4.jar&lt;org.apache.hadoop.mapred(Partitioner.class[Partitioner" modifiers="1537" timestamp="1455271034000"/>
+<typeInfo handle="=Hadoop2.6/D:\/help_doc\/javadev\/hadoop-2.6.4\/share\/hadoop\/mapreduce\/hadoop-mapreduce-client-core-2.6.4.jar&lt;org.apache.hadoop.mapred.lib(HashPartitioner.class[HashPartitioner" modifiers="33" timestamp="1455271034000"/>
+<typeInfo handle="=Hadoop2.6/D:\/help_doc\/javadev\/hadoop-2.6.4\/share\/hadoop\/mapreduce\/hadoop-mapreduce-client-core-2.6.4.jar&lt;org.apache.hadoop.mapreduce(Mapper.class[Mapper" modifiers="33" timestamp="1455271034000"/>
+<typeInfo handle="=Hadoop2.6/D:\/help_doc\/javadev\/hadoop-2.6.4\/share\/hadoop\/mapreduce\/hadoop-mapreduce-client-core-2.6.4.jar&lt;org.apache.hadoop.mapreduce(Reducer.class[Reducer" modifiers="33" timestamp="1455271034000"/>
+<typeInfo handle="=DesignPattern/src&lt;com.lac.businessDelegate{BusinessService.java[BusinessService" modifiers="513" timestamp="1470972504652"/>
+<typeInfo handle="=DesignPattern/src&lt;com.lac.dao{StudentDao.java[StudentDao" modifiers="513" timestamp="1470974080518"/>
+<typeInfo handle="=DesignPattern/src&lt;com.lac.strategy{TravelStrategy.java[TravelStrategy" modifiers="513" timestamp="1471491476596"/>
+<typeInfo handle="=DesignPattern/src&lt;com.lac.factory{CarFactory.java[CarFactory" modifiers="513" timestamp="1471533220261"/>
+<typeInfo handle="=DesignPattern/src&lt;com.lac.abstractFactory2{ContinentFactory.java[ContinentFactory" modifiers="513" timestamp="1472013591098"/>
+</typeInfoHistroy>

@@ -1,0 +1,23 @@
+package bean;
+
+import java.io.File;
+
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+
+public class ImageViewerBean extends JLabel {
+	
+	private File file = null;
+	private static final int XPREFSIZE = 200;
+	private static final int YPREFSIZE = 200;
+	
+	public ImageViewerBean(){
+		setBorder(BorderFactory.createEtchedBorder());
+	}
+	
+	public void setFileName(String fileName){
+		file = new File(fileName);
+		setIcon(new ImageIcon(ImageIO.read(file)));
+	}
+}

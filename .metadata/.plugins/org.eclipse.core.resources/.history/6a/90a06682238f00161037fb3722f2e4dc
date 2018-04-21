@@ -1,0 +1,48 @@
+package com.lac.codility;
+
+public class CodilityMaximum {
+
+	public static void main(String[] args) {
+		int a[] = {23171,21011,21123,21366,21013,21367};
+		int result = profit(a);
+		System.out.println(result);
+	}
+	
+	
+	public static int maxDoubleSlice(int[] a){
+		int length = a.length;
+		int maxFromLeft[] = new int[length];
+		int maxFromRigth[] = new int[length];
+		int maxSumLeft = 0,maxSumRight=0;
+		for(int i=1;i<length-1;i++){
+			maxSumLeft = Math.max(0, maxSumLeft+a[i]);
+			maxFromLeft[i] = maxSumLeft;
+		}
+		for(int i=length-2;i>0;i--){
+			maxSumRight = Math.max(0, maxSumRight+a[i]);
+			maxFromRigth[i]=maxSumRight;
+		}
+	}
+	
+	public static int maximunSlice(int a[]){
+		int max_slice = 0;
+		int max_ending = 0;
+		for(int i:a){
+			max_ending  = Math.max(0,max_ending+i);
+			max_slice = Math.max(max_slice, max_ending);
+		}
+		return max_slice;
+	}
+	
+	public static int profit(int a[]){
+		if(a == null ||a.length==0) return 0;
+		int length = a.length;
+		int gap[] = new int[length-1];
+		for(int i=0;i<length-1;i++){
+			int profit = a[i+1]-a[i];
+			gap[i] = profit;
+		}
+		int maxProfit = maximunSlice(gap);
+		return maxProfit>0?maxProfit:0;
+	}
+}

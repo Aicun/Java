@@ -1,0 +1,61 @@
+package com.lac.codility;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class CodilitySieve {
+	public static void main(String[] args) {
+		//int[] seive = seive(20);
+		int factors = factorization(20);
+		//String result = Arrays.toString(seive);
+		System.out.println(factors);
+	}
+
+	
+	//for a given number,figure out the prime numbers
+	public static int[] seive(int n){
+		int seive[] = new int[n+1];
+		Arrays.fill(seive, 1);
+		seive[0] = seive[1] = 0;
+		int i=2;
+		while(i*i<=n){
+			if(seive[i]==1){
+				int k=i*i;
+				while(k<=n){
+					seive[k]=0;
+					k+=i;
+				}
+			}
+			i++;
+		}
+		return seive;
+	}
+	
+	public static int factorization(int n){
+		int f[] = new int[n+1];
+		int i=2;
+		while(i*i<=n){
+			if(f[i]==0){
+				int k=i*i;
+				while(k<=n){
+					if(f[k]==0){
+						f[k]=i;
+					}
+					k +=i;
+				}
+			}
+			i++;
+		}
+		for(int j=2;j<20;j++){
+			List<Integer> primeFactors = new ArrayList<Integer>();
+			while(f[j]>0){
+				primeFactors.add(f[j]);
+				j = j/f[j];
+			}
+			primeFactors.add(j);
+			System.out.println(j);
+		}
+		return 0;
+	}
+}

@@ -1,0 +1,18 @@
+package com.lac.spider.db;
+
+import javax.sql.DataSource;
+
+import com.mysql.cj.jdbc.MysqlDataSource;
+
+public class MyDataSource {
+
+	public static DataSource getDataSource(String dbUrl) {
+		MysqlDataSource mysqlDS = new MysqlDataSource();
+         //MySQL的jdbc驱动
+		mysqlDS.setDriverClassName("com.mysql.jdbc.Driver");
+		mysqlDS.setUsername("root");              //所要连接的数据库名
+		mysqlDS.setPassword("112233");                //MySQL的登陆密码
+		mysqlDS.setUrl(connectURI);
+        return ds;
+	}
+}

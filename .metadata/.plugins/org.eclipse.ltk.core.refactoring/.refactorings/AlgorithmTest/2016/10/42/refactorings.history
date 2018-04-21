@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;ef&apos; in &apos;com.lac.codility.CodilityPrimeComposit.flags2(...)&apos; to &apos;peeksCount&apos;&#x0D;&#x0A;- Original project: &apos;CodilityTest&apos;&#x0D;&#x0A;- Original element: &apos;com.lac.codility.CodilityPrimeComposit.flags2(int[]).ef&apos;&#x0D;&#x0A;- Renamed element: &apos;ef&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;ef&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;com.lac.codility{CodilityPrimeComposit.java[CodilityPrimeComposit~flags2~\[I@ef!613!634!617!618!I!0!false" name="peeksCount" references="true" stamp="1476157135795" version="1.0"/>
+</session>

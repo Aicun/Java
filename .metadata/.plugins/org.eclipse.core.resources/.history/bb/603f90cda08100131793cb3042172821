@@ -1,0 +1,52 @@
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ChinaSoftware extends HttpClient {
+
+	public Object service() throws Exception {
+
+		this.setBaseUrl("http://localhost:8080/WebTest/welcome.jsp");
+		this.charSet="gb2312";
+		
+		this.url="GGsearch.asp?txtSearch="+URLEncoder.encode(this.getKey(),this.charSet);
+		
+		this.doc=this.getHttpContext(cookie, "测试"+this.getKey());
+		
+		String str="页，每页20条，共";
+		int index = this.doc.toString().indexOf(str);
+	
+		return null;
+	}
+	
+	public String service2()throws Exception{
+		this.setBaseUrl("http://localhost:8080/WebTest/");
+		this.charSet="gb2312";
+		
+		//this.url="GGsearch.asp?txtSearch="+URLEncoder.encode(this.getKey(),this.charSet);
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("username", "abc");
+		map.put("password", "abc");
+		String cookie = this.getHttpPostResponse(this.url,"",map);
+		System.out.println(cookie);
+		return cookie;
+	}
+	
+	public static void main(String args[]){
+		try {
+			ChinaSoftware ss= new ChinaSoftware();
+			//String cookie = ss.service2();
+			ss.service();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public Object service() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,113 @@
+package com.lac.codility;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CodilityPrimeComposit {
+
+	public static void main(String[] args) {
+		// int factors = countFactors(24);
+		int a[] = { 1, 5, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2 };
+		int flags = flags(a);
+		System.out.println(flags);
+	}
+	
+	public static int peaksCount(int[] a){
+		
+	}
+
+	public static int flags2(int[] A) {
+		ArrayList<Integer> array = new ArrayList<Integer>();
+		for (int i = 1; i < A.length - 1; i++) {
+			if (A[i - 1] < A[i] && A[i + 1] < A[i]) {
+				array.add(i);
+			}
+		}
+		if (array.size() <=1) {
+			return array.size();
+		}
+		int maxFlags = 1;
+		int peeksCount = array.size();
+		int result = 1;
+		while (maxFlags <= peeksCount) {
+			int flag = (maxFlags + peeksCount) / 2;
+			boolean suc = false;
+			int used = 0;
+			int mark = array.get(0);
+			for (int i = 0; i < array.size(); i++) {
+				if (array.get(i) >= mark) {
+					used++;
+					mark = array.get(i) + flag;
+					if (used == flag) {
+						suc = true;
+						break;
+					}
+				}
+			}
+			if (suc) {
+				result = flag;
+				maxFlags = flag + 1;
+			} else {
+				peeksCount = flag - 1;
+			}
+		}
+		return result;
+	}
+
+	public static int flags(int[] a) {
+		int length = a.length;
+		List<Integer> peeks = new ArrayList<Integer>();
+		for (int i = 1; i < length - 1; i++) {
+			if (a[i] > a[i - 1] && a[i] > a[i + 1]) {
+				peeks.add(i);
+			}
+		}
+		int peeksCount = peeks.size();
+		int peeksDistance[] = new int[peeksCount - 1];
+		for (int i = 1; i < peeksCount; i++) {
+			peeksDistance[i - 1] = peeks.get(i) - peeks.get(i - 1);
+		}
+
+		int maxDistance = Integer.MIN_VALUE;
+		int minDistance = Integer.MAX_VALUE;
+
+		for (int i : peeksDistance) {
+			maxDistance = Math.max(i, maxDistance);
+			minDistance = Math.min(i, minDistance);
+		}
+		int maxFlags = Math.min(maxDistance, peeksCount);
+
+		return 0;
+	}
+
+	public static int countFactors(int n) {
+		int count = 0;
+		int i = 1;
+		int sqrt = (int) Math.sqrt(n);
+		while (i <= sqrt) {
+			if (n % i == 0) {
+				count = count + 2;
+			}
+			i++;
+		}
+		if (sqrt * sqrt == n)
+			count--;
+		return count;
+	}
+
+	public static int minPerimeterRectangle(int n) {
+		int i = 1;
+		int min = Integer.MAX_VALUE;
+		int perimeter = 0;
+		while (i * i <= n) {
+			if (n % i == 0) {
+				int other = n / i;
+				perimeter = 2 * (i + other);
+				perimeter = Math.min(min, perimeter);
+			}
+			i++;
+		}
+		return perimeter;
+	}
+
+}

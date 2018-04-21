@@ -1,0 +1,34 @@
+package com.lac.savinguniverse;
+
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
+public class Solution {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(new InputStreamReader(System.in));
+		int t = in.nextInt(); // Scanner has functions to read ints, longs, strings, chars, etc.
+		for (int i = 1; i <= t; ++i) {
+			int n = in.nextInt();
+			String m = in.next();
+		}
+	}
+	
+	public static void Calculate(int count, String program) {
+		
+	}
+	
+	public static int countRobotShoots(String program)
+	{
+		char[] cs = program.toCharArray();
+		int count = 0;
+		for (char c : cs) {
+			if(c == 'C') {
+				
+			}
+			if (c == 'S') {
+				
+			}
+		}
+	}
+}

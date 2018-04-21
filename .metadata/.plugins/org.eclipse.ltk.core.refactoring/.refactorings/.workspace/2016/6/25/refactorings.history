@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;Hadoop2.5&apos; to &apos;Hadoop2.6&apos;&#x0D;&#x0A;- Original element: &apos;Hadoop2.5&apos;&#x0D;&#x0A;- Renamed element: &apos;Hadoop2.5&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename Java project &apos;Hadoop2.5&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=Hadoop2.5" name="Hadoop2.6" references="true" stamp="1465960141539" version="1.0"/>
+</session>

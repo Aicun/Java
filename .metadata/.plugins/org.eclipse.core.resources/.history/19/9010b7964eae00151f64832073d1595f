@@ -1,0 +1,11 @@
+package nio;
+
+import java.io.Serializable;
+
+public class ObjectStreamTest {
+
+}
+
+class Employee implements Serializable {
+	public Employee(){};
+}

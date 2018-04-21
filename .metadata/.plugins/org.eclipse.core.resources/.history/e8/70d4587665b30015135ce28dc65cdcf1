@@ -1,0 +1,201 @@
+package bean;
+
+import java.awt.Shape;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.EnumMap;
+import java.util.Map;
+
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+public class DamageReporter extends JFrame {
+	
+	private JTextField rentalRecord;
+	private JComboBox carType;
+	private JComponent carComponent;
+	private JRadioButton addButton;
+	private JRadioButton removeButton;
+	private DamageReport report;
+	private JFileChooser chooser;
+	
+	private static final int DEFAULT_WIDTH = 400;
+	private static final int DEFAULT_HEIGHT = 400;
+	
+	private static Map<DamageReport.CarType,Shape> shapes = new EnumMap<DamageReport.CarType,Shape>(DamageReport.CarType.class);
+
+	
+	static {
+		int width = 200;
+		int x = 50;
+		int y = 50;
+		
+		Rectangle2D.Double body = new Rectangle2D.Double(x,y+width/6,width-1,width/6);
+		Ellipse2D.Double frontTire = new Ellipse2D.Double(x+width/6,y+width/3,width/6,width/6);
+		Ellipse2D.Double rearTire = new Ellipse2D.Double(x+width*2/3,y+width/3,width/6,width/6);
+		
+		Point2D.Double p1 = new Point2D.Double(x+width/6,y+width/6);
+		Point2D.Double p2 = new Point2D.Double(x+width/3,y);
+		Point2D.Double p3 = new Point2D.Double(x+width*2/3,y);
+		Point2D.Double p4 = new Point2D.Double(x+width*5/6,y+width/6);
+		
+		Line2D.Double frontWindShield = new Line2D.Double(p1,p2);
+		Line2D.Double roofTop = new Line2D.Double(p2,p3);
+		Line2D.Double rearWindShield = new Line2D.Double(p3,p4);
+		
+		GeneralPath sedanPath = new GeneralPath();
+		sedanPath.append(frontTire, false);
+		sedanPath.append(rearTire, false);
+		sedanPath.append(body, false);
+		sedanPath.append(frontWindShield, false);
+		sedanPath.append(roofTop, false);
+		sedanPath.append(rearWindShield, false);
+		
+		shapes.put(DamageReport.CarType.SEDAN, sedanPath);
+		
+		Point2D.Double p5 = new Point2D.Double(x+width*11/12,y);
+		Point2D.Double p6 = new Point2D.Double(x+width,y+width/6);
+		roofTop = new Line2D.Double(p2,p5);
+		rearWindShield = new Line2D.Double(p5,p6);
+		
+		GeneralPath wagonPth = new GeneralPath();
+		wagonPth.append(frontTire, false);
+		wagonPth.append(rearTire, false);
+		wagonPth.append(body, false);
+		wagonPth.append(frontWindShield, false);
+		wagonPth.append(roofTop, false);
+		wagonPth.append(rearWindShield, false);
+		
+		shapes.put(DamageReport.CarType.WAGON, wagonPth);
+		
+		Point2D.Double p7 = new Point2D.Double(x+width/3,y-width/6);
+		Point2D.Double p8 = new Point2D.Double(x+width*11/12,y-width/6);
+		frontWindShield = new Line2D.Double(p1,p7);
+		roofTop = new Line2D.Double(p7,p8);
+		rearWindShield = new Line2D.Double(p8,p6);
+		
+		GeneralPath suvPath = new GeneralPath();
+		suvPath.append(frontTire, false);
+		suvPath.append(rearTire, false);
+		suvPath.append(body, false);
+		suvPath.append(frontWindShield, false);
+		suvPath.append(roofTop, false);
+		suvPath.append(rearWindShield, false);
+		
+		shapes.put(DamageReport.CarType.SUV, suvPath);
+	}
+	
+	public static void main(String args[]) {
+		JFrame frame = new DamageReporter();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+	
+	public DamageReporter(){
+		setTitle("DamageReporter");
+		setSize(DEFAULT_WIDTH,DEFAULT_HEIGHT);
+		
+		chooser = new JFileChooser();
+		chooser.setCurrentDirectory(new File("D:/"));
+		
+		report = new DamageReport();
+		report.setCarType(DamageReport.CarType.SEDAN);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu menu = new JMenu("File");
+		menuBar.add(menu);
+		
+		JMenuItem openItem = new JMenuItem("open");
+		menu.add(openItem);
+		openItem.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int r = chooser.showOpenDialog(null);
+				
+				if(r == JFileChooser.APPROVE_OPTION) {
+					try {
+						File file = chooser.getSelectedFile();
+						XMLDecoder decoder = new XMLDecoder(new FileInputStream(file));
+						report = (DamageReport)decoder.readObject();
+						decoder.close();
+						rentalRecord.setText(report.getRentalRecord());
+						carType.setSelectedItem(report.getCarType());
+						repaint();
+					}catch(IOException e1){
+						JOptionPane.showMessageDialog(null, e1);
+					}
+				}
+			}
+			
+		});
+		
+		JMenuItem saveItem = new JMenuItem("save");
+		menu.add(saveItem);
+		saveItem.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				report.setRentalRecord(rentalRecord.getText());
+				chooser.setSelectedFile(new File("D:/"+rentalRecord.getText()+".xml"));
+				
+				int r = chooser.showSaveDialog(null);
+				
+				if(r == JFileChooser.APPROVE_OPTION) {
+					try {
+						File file = chooser.getSelectedFile();
+						XMLEncoder encoder = new XMLEncoder(new FileOutputStream(file));
+						report.configureEncoder(encoder);
+						encoder.writeObject(report);
+						encoder.close();
+					} catch (FileNotFoundException e1) {
+						JOptionPane.showMessageDialog(null, e1);
+					}
+				}
+			}
+			
+		});
+		
+		
+		JMenuItem exitItem = new JMenuItem("exit");
+		menu.add(exitItem);
+		exitItem.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+
+		
+		rentalRecord = new JTextField();
+		carType = new JComboBox();
+		carType.addItem(DamageReport.CarType.SEDAN);
+		carType.addItem(DamageReport.CarType.WAGON);
+		carType.addItem(DamageReport.CarType.SUV);
+		
+	}
+	
+}

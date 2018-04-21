@@ -1,0 +1,12 @@
+package com.lac.adapter;
+
+public class MediaAdapter implements MediaPlayer {
+
+	AdvancedMediaPlayer advancedMusicPlayer;
+	@Override
+	public void play(String audioType, String fileName) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

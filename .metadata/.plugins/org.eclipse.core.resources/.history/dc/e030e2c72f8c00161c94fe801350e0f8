@@ -1,0 +1,91 @@
+package com.lac.codility;
+
+import java.util.Arrays;
+
+public class CodilitySort {
+
+	public static void main(String[] args) {
+		int a[] = {1, 5, 2, 1, 4, 0};
+		int result = numberOfDiscIntersections(a);
+		System.out.println(result);
+	}
+	
+	public static double numberOfDiscIntersections(int []a){
+		int length = a.length;
+		double total =0;
+		for(int i=0;i<length;i++){
+			//int radius = a[i];
+			//int leftRange = i-radius;
+			//int rightRange = i+radius;
+			for(int j=i+1;j<length;j++){
+				if(a[i]+a[j]>=Math.abs(i-j)){
+					total++;
+					if(total>10000000){
+						total = -1;break;
+					}
+				}
+			}
+		}
+		return total;
+	}
+	
+	public static int triangle(int []a){
+		if(null == a || a.length < 3) return 0;
+		Arrays.sort(a);
+		int result = 0;
+		for(int i=0;i<a.length-2;i++){
+			//don't use plus, use minus instead to avaoid overflow
+			if(a[i]>0 && a[i]> a[i+2]-a[i+1]){
+				result = 1;
+			}
+		}
+		return result;
+	}
+	
+	public static int distinct(int[] a){
+		Arrays.sort(a);
+		int length = a.length;
+		int count;
+		if(length==0){
+			count = 0;
+		}else{
+			count = 1;
+			for(int i=1;i<length;i++){
+				if(a[i]!=a[i-1]){
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+	
+	public static int triplet(int []a){
+		int[] maxes = {Integer.MIN_VALUE,Integer.MIN_VALUE,Integer.MIN_VALUE};
+		int[] mins = {Integer.MAX_VALUE,Integer.MAX_VALUE};
+		
+		for(int value: a){
+			if(value>maxes[2]){
+				maxes[0] = maxes[1];
+				maxes[1] = maxes[2];
+				maxes[2] = value;
+			}else if (value > maxes[1]){
+				maxes[0] = maxes[1];
+				maxes[1] = value;
+			}else if(value > maxes[0]){
+				maxes[0] = value;
+			}
+			
+			if(value<mins[0]){
+				mins[1] = mins[0];
+				mins[0] = value;
+			}else if(value<mins[1]){
+				mins[1] = value;
+			}
+		}
+		
+		int positive = maxes[0] * maxes[1] * maxes[2];
+		int negative = mins[0] * mins[1] * maxes[2];
+		int max = Math.max( positive, negative);
+		return max;
+	}
+}

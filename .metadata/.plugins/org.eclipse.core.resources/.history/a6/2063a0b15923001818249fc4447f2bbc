@@ -1,0 +1,21 @@
+package com.lac.spider.db;
+
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+import org.apache.commons.dbutils.QueryRunner;
+
+public class DbManager {
+
+	static DataSource ds = MyDataSource.getDataSource("jdbc:mysql://127.0.0.1:3306/moviedata");
+    static QueryRunner qr = new QueryRunner(ds);
+    
+    public static void executeUpdate(String sql){
+        try {
+            qr.update(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}

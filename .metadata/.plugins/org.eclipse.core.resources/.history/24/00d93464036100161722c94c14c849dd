@@ -1,0 +1,16 @@
+package com.lac.servicelocator;
+
+public class ServiceLocator {
+
+	private InitialContext context;
+	private static Cache cache;
+	
+	static{
+		cache = new Cache();
+	}
+	
+	public Service getService(String jndiName) {
+		 Service service = cache.getService(jndiName);
+		 
+	}
+}

@@ -1,0 +1,275 @@
+package com.lac;
+
+
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Map.Entry;
+
+import org.apache.http.Consts;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+public abstract class HttpClient {
+
+	public String baseUrl = null;
+	public CloseableHttpClient  client = null;
+
+	public File baseDir = null;
+	private File picturedir = null;
+
+	private String key = "";
+	private String key2 = "";
+
+	public String host = null;
+
+	public String url = "";
+	public String html = "";
+	public Document doc = null;
+
+	public String charSet = "GBK";
+
+	public boolean isDubug = false;
+
+	public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH_mm_ss");
+
+	public Logger log = Logger.getLogger(this.getClass());
+
+	private String clientFlag = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0";
+
+	public HttpClient() {
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();  
+        //HttpClient  
+        this.client = httpClientBuilder.build();  
+		File base = new File(this.getClass().getResource("/").getFile());
+		try {
+			this.baseDir = new File(URLDecoder.decode(base.getAbsolutePath(),
+					"UTF-8")).getParentFile().getParentFile();
+		} catch (UnsupportedEncodingException e) {
+			log.error(e.getMessage());
+		}
+		this.picturedir = new File(this.baseDir, "images");
+	}
+
+	public void setBaseUrl(String baseUrl) throws UnsupportedEncodingException {
+
+		this.baseUrl = baseUrl;
+	}
+
+	// 根据url取得内容
+	public String getHttpPostResponse(String url) {
+
+		long start = System.currentTimeMillis(); // 计时
+		HttpPost post = new HttpPost(url);
+		ArrayList<NameValuePair> nvps = new ArrayList<NameValuePair>();
+		nvps.add(new BasicNameValuePair("p_t02", "HOST"));
+		nvps.add(new BasicNameValuePair("p_t01", "host"));
+		String rs = "";
+		try {
+			HttpEntity entity = new UrlEncodedFormEntity(nvps,Consts.UTF_8);
+			post.setEntity(entity);
+			HttpResponse resp = this.client.execute(post);
+
+			rs = EntityUtils.toString(resp.getEntity());
+			System.out.println("#############"+rs);
+			return rs;
+		} catch (Exception e) {
+		} finally {
+			log.info("结束:用时:" + (System.currentTimeMillis() - start)
+					+ "ms,rs.len=" + rs.length() + ",key=" + key
+					+ " (" + url + ")");
+		}
+		return null;
+	}
+
+	public String getHttpResponse(String url) throws MalformedURLException, URISyntaxException {
+		long start = System.currentTimeMillis(); // 计时
+		//log.info("开始:" + info + ",key=" + this.key + " (" + baseUrl + url+ ")");
+
+		HttpGet get = new HttpGet(url);
+		get.addHeader("Accept", "*/*");
+		if (host != null) {
+			get.addHeader("Host", host);
+		}
+		get.addHeader("Accept-Language", "zh-CN");
+		String rs = "";
+		try {
+			HttpResponse resp = this.client.execute(get);
+			if (resp.getStatusLine().getStatusCode() == 200) {
+				//EntityUtils.toString(resp.getEntity());
+				rs = EntityUtils.toString(resp.getEntity(), charSet);
+				System.out.println("#############"+rs);
+				return rs;
+			}else{
+				throw new Exception("错误,resp.getStatusLine().getStatusCode()="+resp.getStatusLine().getStatusCode());
+			}
+			
+		} catch (Exception e) {
+			log.error("异常:" + ",key=" + this.key + " (" + url + ")"
+					+ e.getMessage());
+			e.printStackTrace();
+			log.info("重试,开始:"  + ",key=" + this.key + " (" + url + ")");
+			HttpResponse resp;
+			try {
+				resp = this.client.execute(get);
+				if (resp.getStatusLine().getStatusCode() == 200) {
+					EntityUtils.toString(resp.getEntity());
+				}
+				rs = EntityUtils.toString(resp.getEntity(), charSet);
+				return rs;
+			} catch (Exception e1) {
+				log.error("重试一次后再异常,开始:"  + ",key=" + this.key + " ("
+						+ url + ")" + e.getMessage());
+			}
+
+		} finally {
+			log.info("结束:用时:" + (System.currentTimeMillis() - start)
+					+ "ms,rs.len=" + rs.length() + ","  + ",key=" + key
+					+ " (" + url + ")");
+		}
+		return null;
+	}
+
+	public Document getHttpContext(String url, String info,
+			Map<String, String> param) throws Exception {
+
+		StringBuffer sb = new StringBuffer();
+		sb.append(url);
+		if (param != null && param.size() > 0) {
+			sb.append("?");
+			Iterator<Entry<String, String>> it = param.entrySet().iterator();
+			while (it.hasNext()) {
+				Entry<String, String> e = it.next();
+				sb.append(e.getKey() + "=");
+				if (this.isChinese(e.getValue())) {
+					sb.append(URLEncoder.encode(e.getValue(), this.charSet)); // 中文的处理
+				} else {
+					sb.append(e.getValue());
+				}
+				sb.append("&");
+			}
+			sb.deleteCharAt(sb.length() - 1);
+		}
+		url = sb.toString();
+
+		return this.getHttpContext(url);
+	}
+
+	public Document getHttpContext(String url) throws Exception {
+
+		try {
+			this.html = this.getHttpResponse(url);
+
+			return Jsoup.parse(html);
+		} catch (Exception e) {
+			log.error("解析http请求出错," + "(" + url + ")," + e.getMessage());
+			throw e;
+		}
+	}
+
+	public boolean isChinese(String str) {
+
+		for (int i = 0; i < str.length(); i++) {
+			boolean b = str.substring(i, i + 1).matches("[\\u4e00-\\u9fbb]+");
+			if (b) {
+				return b;
+			}
+		}
+
+		return false;
+	}
+
+	public File getPicture(String url) throws ClientProtocolException,
+			IOException {
+
+		try {
+			HttpGet get = new HttpGet(this.baseUrl + url);
+			get.addHeader("Accept", "*/*");
+			if (host != null) {
+				get.addHeader("Host", host);
+			}
+			// get.addHeader("Content-Type", "text/html; charset=GBK");
+			get.addHeader("Accept-Language", "zh-CN");
+			// get.addHeader("User-Agent", clientFlag);
+			HttpResponse resp = this.client.execute(get);
+
+			File picture = new File(this.picturedir, "p"
+					+ new Random().nextInt(999) + ".jpg");
+
+			byte[] bs = EntityUtils.toByteArray(resp.getEntity());
+			resp.getEntity().getContent().close();
+			FileOutputStream fos = new FileOutputStream(picture);
+			fos.write(bs);
+			fos.flush();
+			fos.close();
+
+			return picture;
+		} catch (IOException e) {
+			log.error("取得图片错误," + url + "," + e.getMessage());
+			throw e;
+		}
+
+	}
+
+	public String readFile(File temp) throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				new FileInputStream(temp)));
+		String line = null;
+		StringBuffer html_temp = new StringBuffer();
+		while ((line = br.readLine()) != null) {
+			html_temp.append(line);
+		}
+		br.close();
+		return html_temp.toString();
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+
+		this.key = key;
+	}
+
+	public String getKey2() {
+		return key2;
+	}
+
+	public void setKey2(String key2) {
+
+		this.key2 = key2;
+	}
+
+	public abstract Object service() throws Exception;
+	
+	public Object execute() throws Exception {
+		
+		try{
+			return this.service();
+		}finally{
+			this.client.getConnectionManager().shutdown();
+		}
+	}
+}
+

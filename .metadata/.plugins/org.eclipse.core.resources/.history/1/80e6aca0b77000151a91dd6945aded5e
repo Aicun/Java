@@ -1,0 +1,54 @@
+package nio;
+
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+
+public class Copy {
+	
+	static class TreeCopier implements FileVisitor<Path>{
+		
+		private final Path source;
+		private final Path target;
+		private final boolean prompt;
+		private final boolean preserve;
+		
+		TreeCopier(Path source,Path target,boolean prompt,boolean preserve){
+			this.source = source;
+			this.target = target;
+			this.prompt = prompt;
+			this.preserve = preserve;
+		}
+
+		@Override
+		public FileVisitResult preVisitDirectory(Path dir,
+				BasicFileAttributes attrs) throws IOException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+				throws IOException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public FileVisitResult visitFileFailed(Path file, IOException exc)
+				throws IOException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public FileVisitResult postVisitDirectory(Path dir, IOException exc)
+				throws IOException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+	}
+}

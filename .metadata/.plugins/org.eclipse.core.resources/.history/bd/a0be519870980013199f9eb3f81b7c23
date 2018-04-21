@@ -1,0 +1,156 @@
+package com.lac;
+
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.select.Elements;
+
+
+public class BjsasClient extends HttpClient {
+
+	public List<String> service(String url) throws Exception {
+		this.doc=this.getHttpContext("http://10.128.192.100:7780/apex/"+url);//第一个页面
+		Elements tables = doc.getElementsByTag("table");
+		Element e = tables.get(14);
+		Elements ee = e.getElementsByTag("tr");
+		List<List<String>> lists = new ArrayList<List<String>>();//获取第一个页面所有的位置信息，存入lists中
+		List<String> UEssBCnID = new ArrayList<String>();
+		for(int i=1;i<ee.size();i++){
+			Element el = ee.get(i);
+			List<Node> node = el.childNodes();
+			List<String> values = new ArrayList<String>();
+			for(int k=2;k<node.size();k++){
+				Node n = node.get(k);
+				if(n.nodeName().equals("td")){
+					String ss;
+					if(n.childNodeSize()!=0){
+						ss = n.childNode(0).toString();
+						ss.trim();
+						if(k==2){
+							UEssBCnID.add(ss);
+						}
+					}else{
+						ss="";
+					}
+					values.add(ss);
+				}
+			}
+			lists.add(values);
+		}
+		//System.out.println("##############"+lists.size());
+		/*for(int h=0;h<UEssBCnID.size();h++){
+			System.out.println(h+" is " + UEssBCnID.get(h));
+		}*/
+		return UEssBCnID;
+	}
+	
+	public String login(){
+		try {
+			String html = this.getHttpResponse("http://10.128.192.100:7780/apex/f?p=100:1000");
+			Document doc = Jsoup.parse(html);
+			Element e1 = doc.getElementById("pInstance");
+			Element e2 = doc.getElementById("pPageSubmissionId");
+			Element e3 = doc.getElementById("P101_PAGE");
+			Element e4 = e3.parent();
+			Element e5 = e4.getAllElements().last();
+			Element e6 = doc.getElementById("P101_PWD");
+			Element e7 = e6.parent();
+			Element e8 = e7.getAllElements().last();
+			
+			String instance = e1.attr("value");
+			String submissionId = e2.attr("value");
+			String p_value1=e5.attr("value");
+			String p_value2=e8.attr("value");
+			
+			ArrayList<NameValuePair> nvps = new ArrayList<NameValuePair>();
+			nvps.add(new BasicNameValuePair("p_t04", ""));
+			nvps.add(new BasicNameValuePair("p_t03", "1"));
+			nvps.add(new BasicNameValuePair("p_t02", "HOST"));
+			nvps.add(new BasicNameValuePair("p_t01", "host"));
+			nvps.add(new BasicNameValuePair("p_request", "LOGIN"));
+			nvps.add(new BasicNameValuePair("p_page_submission_id",submissionId));
+			nvps.add(new BasicNameValuePair("p_md5_checksum", ""));
+			nvps.add(new BasicNameValuePair("p_instance",instance));
+			nvps.add(new BasicNameValuePair("p_flow_step_id", "101"));
+			nvps.add(new BasicNameValuePair("p_flow_id", "100"));
+			nvps.add(new BasicNameValuePair("p_arg_values",p_value1));
+			nvps.add(new BasicNameValuePair("p_arg_values", p_value2));
+			nvps.add(new BasicNameValuePair("p_arg_names", "1261203759075060"));
+			nvps.add(new BasicNameValuePair("p_arg_names", "1261327770075061"));
+			nvps.add(new BasicNameValuePair("p_arg_names", "2183012807550078"));
+			nvps.add(new BasicNameValuePair("p_arg_names", "53065518115205654"));
+			String location = this.getHttpPostResponse("http://10.128.192.100:7780/apex/wwv_flow.accept",nvps);
+			return location;
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void secondPage(String url) throws Exception{
+		this.doc=this.getHttpContext(url);//访问第二个页面，每个表的前两行数据输入到控制台
+		Elements tables = doc.getElementsByTag("table");
+		Element UE = tables.get(9);
+		Element Registration  = tables.get(12);
+		Element GPS = tables.get(15);
+		Element Position = tables.get(18);
+		Element CN_Connection = tables.get(21);
+		getData(UE);
+		getData(Registration);
+		getData(GPS);
+		getData(Position);
+		getData(CN_Connection);
+		
+	}
+	
+	/**
+	 * 第二个页面每个表的数据
+	 * @param e
+	 */
+	private void getData(Element e){
+		Elements ee = e.getElementsByTag("table");
+		Element table = ee.get(1);
+		Elements tr = table.getElementsByTag("tr");
+		for(int i=1;i<3;i++){
+			Element value = tr.get(i);
+			List<Node> node = value.childNodes();
+			for(int j=0;j<node.size();j++){
+				Node n = node.get(j);
+				if(n.nodeName().equals("td")||n.nodeName().equals("th")){
+					System.out.println(n.childNode(0).toString());
+				}
+			}
+		}
+		System.out.println(e.nodeName()+"###############"+ee.size());
+	}
+	
+	public static void main(String args[]){
+		BjsasClient client = new BjsasClient();
+		String location = client.login();
+			if(location !=null){
+				try {
+					/*List<String>ids = client.service(location);
+					for(int i=0;i<ids.size();i++){
+						String id = ids.get(i);
+						String url = "http://10.128.192.100:7780/apex/"+location+"::NO::P1001_BCNID:"+id;
+						client.secondPage(url);
+					}*/
+					String url = "http://10.128.192.100:7780/apex/"+location+"::NO::P1001_BCNID:2946984";
+					client.secondPage(url);
+				} catch (Exception e) {
+				}
+			}
+
+	}
+
+}

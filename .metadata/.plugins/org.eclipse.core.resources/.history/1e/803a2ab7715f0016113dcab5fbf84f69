@@ -1,0 +1,12 @@
+package com.lac.state;
+
+public class TestState {
+
+	public static void main(String[] args) {
+		Context context = new Context();
+
+		StartState startState = new StartState();
+		startState.doAction(context);
+	}
+
+}

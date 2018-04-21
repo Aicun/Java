@@ -1,0 +1,21 @@
+package com.lac.spider.utils;
+
+import java.util.List;
+
+import org.apache.http.client.HttpClient;
+
+public class URLFetcher {
+	public static List<Book> URLParser (HttpClient client, String url) throws Exception {
+        List<Book> JingdongData = new ArrayList<Book>();
+        HttpResponse response = HTTPUtils.getRawHtml(client, url);      
+        int StatusCode = response.getStatusLine().getStatusCode();
+        if(StatusCode == 200){
+            String entity = EntityUtils.toString (response.getEntity(),"utf-8");    
+            JingdongData = JdParse.getData(entity);
+            EntityUtils.consume(response.getEntity());
+        }else {
+            EntityUtils.consume(response.getEntity());
+        }
+        return JingdongData;
+    }
+}

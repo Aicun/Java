@@ -1,0 +1,21 @@
+package com.lac.hadoop.temperature.sort;
+
+import org.apache.hadoop.io.WritableComparable;
+import org.apache.hadoop.io.WritableComparator;
+
+import com.lac.hadoop.temperature.base.KeyPair;
+
+
+public class KeyPairGroup extends WritableComparator{
+
+	public KeyPairGroup() {
+		super(KeyPair.class,true);
+	}
+	
+	@Override
+	public int compare(WritableComparable a, WritableComparable b) {
+		KeyPair kp1 = (KeyPair) a;
+		KeyPair kp2 = (KeyPair) b;
+		return new Integer(kp1.getYear()).compareTo(new Integer(kp2.getYear()));
+	}
+}

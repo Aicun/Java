@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime"
+        version="2.0">
+        <!-- 1.Servlet中所需要对应的名称2.实现类3.浏览器的后缀 -->
+        <endpoint name="UserService" implementation="com.lac.ws.UserServiceImpl"
+            url-pattern="/us" />
+    </endpoints>

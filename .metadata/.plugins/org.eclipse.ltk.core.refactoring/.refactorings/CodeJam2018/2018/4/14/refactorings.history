@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;com.lac.savinguniverse.SavingTheUniverse.java&apos; to &apos;Solution.java&apos;&#x0D;&#x0A;- Original project: &apos;CodeJam2018&apos;&#x0D;&#x0A;- Original element: &apos;com.lac.savinguniverse.SavingTheUniverse.java&apos;&#x0D;&#x0A;- Renamed element: &apos;com.lac.savinguniverse.Solution.java&apos;" description="Rename compilation unit &apos;SavingTheUniverse.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;com.lac.savinguniverse{SavingTheUniverse.java" name="Solution.java" references="false" stamp="1523070033964" version="1.0"/>
+</session>

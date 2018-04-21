@@ -1,0 +1,21 @@
+
+public class MultiThread implements Runnable{
+
+	private int start;
+	private int end;
+	
+	public MultiThread(int start,int end){
+		this.start = start;
+		this.end = end;
+	}
+	
+	
+	@Override
+	public void run() {
+		
+	}
+	
+	public static void main(String args[]){
+		
+	}
+}

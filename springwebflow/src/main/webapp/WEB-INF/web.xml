@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<display-name>ss-app web application</display-name>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring-context.xml</param-value>
+	</context-param>
+	<context-param>  
+		<param-name>log4jConfigLocation</param-name>  
+		<param-value>/WEB-INF/classes/log4j.xml</param-value>  
+	</context-param> 	
+
+	<listener>
+		<listener-class>cn.cttic.ssa.infrastructure.listener.SsappServletContextListener</listener-class>
+	</listener>
+	<listener>  
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>  
+	</listener>  
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+<!-- 		<init-param>
+			<param-name>contextAttribute</param-name>
+			<param-value>org.springframework.web.servlet.FrameworkServlet.CONTEXT.spring</param-value>
+		</init-param> -->
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> 
+
+ 	<filter>
+		<filter-name>sitemesh</filter-name>
+		<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>sitemesh</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- 自己添加解决提交中文乱码 -->
+	<filter>     
+  <filter-name>Set Character Encoding</filter-name>     
+  <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>     
+  <init-param>     
+    <param-name>encoding</param-name>     
+    <param-value>utf8</param-value>     
+  </init-param>     
+</filter>     
+ <filter-mapping>     
+    <filter-name>Set Character Encoding</filter-name>     
+    <url-pattern>/*</url-pattern>     
+ </filter-mapping> 
+ 
+ 	<!-- 浏览器不支持put,delete等method,由该filter将/blog?_method=delete转换为标准的http delete方法 -->    
+<filter>    
+    <filter-name>HiddenHttpMethodFilter</filter-name>    
+    <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>    
+</filter>    
+    
+<filter-mapping>    
+    <filter-name>HiddenHttpMethodFilter</filter-name>    
+    <servlet-name>appServlet</servlet-name>    
+</filter-mapping> 
+	<!-- ********************end**************************** -->
+ 	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+     <servlet>
+        <servlet-name>sitemesh-freemarker</servlet-name>
+        <servlet-class>com.opensymphony.module.sitemesh.freemarker.FreemarkerDecoratorServlet</servlet-class>
+        <init-param>
+            <param-name>TemplatePath</param-name>
+            <param-value>/</param-value>
+        </init-param>
+        <init-param>
+            <param-name>default_encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <load-on-startup>20</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+       <servlet-name>sitemesh-freemarker</servlet-name>
+       <url-pattern>*.dec</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+		<servlet-name>CXFService</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CXFService</servlet-name>
+		<url-pattern>/app/safety/ws/*</url-pattern>
+	</servlet-mapping>
+	
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>400</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	
+ </web-app>
+

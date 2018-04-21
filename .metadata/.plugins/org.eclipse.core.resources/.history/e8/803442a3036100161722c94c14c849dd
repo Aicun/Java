@@ -1,0 +1,8 @@
+package com.lac.servicelocator;
+
+public class TestServiceLocator {
+
+	public static void main(String[] args) {
+		
+	}
+}

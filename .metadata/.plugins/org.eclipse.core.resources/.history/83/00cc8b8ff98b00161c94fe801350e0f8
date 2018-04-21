@@ -1,0 +1,16 @@
+package com.lac.codility;
+
+import java.util.Arrays;
+
+public class CodilitySort {
+
+	public static void main(String[] args) {
+		int a[] = {-10, -2, -4};
+		int result = triplet(a);
+		System.out.println(result);
+	}
+	
+	public static int triplet(int []a){
+		
+	}
+}

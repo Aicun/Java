@@ -1,0 +1,59 @@
+package com.lac.codility;
+
+public class CodilityPrefix {
+	public static void main(String[] args) {
+		//int a[] = {1,0,1,1,0};
+		int result = countDiv(6,11,2);
+		System.out.println(result);
+	}
+	
+	enum DNA{
+		A(1);
+		C(2);
+		G(3);
+		T(4);
+		
+		private int index;
+		DNA(int index){
+			this.index = index;
+		}
+		int getIndex(){
+			return index;
+		}
+	}
+
+	public int[] dnaImpact(String s,int[] p, int[] q){
+		
+	}
+	
+	public static int pasingCar(int []a){
+		int ones = 0;
+		int zeros = 0;
+		int length = a.length;
+		int count = 0;
+		for(int i=0;i<length;i++){
+			if(a[i]==0) zeros++;
+		}
+		ones = length-zeros;
+		for(int i=0;i<length;i++){
+			if(a[i]==0){
+				count +=ones;
+				if(count>1000000000){
+					count = -1;
+					break;
+				}
+			}else{
+				ones--;
+			}
+		}
+		if(count>1000000000)
+			count = -1;
+		return count;
+	}
+	
+	public static int countDiv(int a,int b,int k){
+		int count = b/k-a/k+(a%k==0?1:0);
+		return count;
+	}
+
+}

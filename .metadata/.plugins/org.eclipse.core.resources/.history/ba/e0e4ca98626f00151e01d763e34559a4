@@ -1,0 +1,7 @@
+package nio;
+
+import java.nio.file.SimpleFileVisitor;
+
+public class PrintFiles extends SimpleFileVisitor<Path>{
+
+}

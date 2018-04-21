@@ -1,0 +1,39 @@
+package com.lac.codility;
+
+public class CodilityPrimeComposit {
+
+	public static void main(String[] args) {
+		int factors = countFactors(1);
+		System.out.println(factors);
+	}
+	
+	public static int countFactors(int n){
+		int count = 0;
+		int i=1;
+		n = Math.sqrt(n);
+		while(i*i<n){
+			if(n%i==0){
+				count = count+2;
+			}
+			i++;
+		}
+		if(i*i==n) count ++;
+		return count;
+	}
+	
+	public static int minPerimeterRectangle(int n){
+		int i=1;
+		int min = Integer.MAX_VALUE;
+		int perimeter = 0;
+		while(i*i<=n){
+			if(n % i == 0){
+				int other = n/i;
+				perimeter = 2*(i+other);
+				perimeter = Math.min(min, perimeter);
+			}
+			i++;
+		}
+		return perimeter;
+	}
+
+}

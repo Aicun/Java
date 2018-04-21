@@ -1,0 +1,52 @@
+package com.lac.codility;
+
+public class Iterator {
+	public static void main(String[] args) {
+		int a[] = {3, 8, 9, 7, 6 };
+		//int a[] = {1,2};
+		a = solution(a,1);
+		for(int i:a){
+			System.out.println(i);
+		}
+	}
+	
+	public static int[] solution(int[] a, int k) {
+		int length = a.length;
+		if(length==0) return a;
+		int move = k % length;
+		if(move==0) return a;
+		int[] temp = new int[move];
+		for(int i=0;i<move;i++){
+			temp[i] = a[length-move+i];
+		}
+		for(int i=0;i<move;i++){
+			a[i+move] = a[i];
+		}
+		for(int i=0;i<move;i++){
+			a[i] = temp[i];
+		}
+		return a;
+	}
+	
+	public static int binaryGap(int n){
+		String binary = Integer.toBinaryString(n);
+		System.out.println(binary);
+		int length = binary.length();
+		int gap = 0;
+		int tempGap = 0;
+		if(binary.lastIndexOf('1')==0)
+			return gap;
+		for(int i=1;i<length;i++){
+			if(binary.charAt(i)=='0'){
+				tempGap++;
+			}
+			else{
+				if(tempGap>gap){
+					gap = tempGap;
+				}
+				tempGap =0;
+			}
+		}
+		return gap;
+	}
+}

@@ -1,0 +1,103 @@
+package com.lac;
+
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.select.Elements;
+
+
+public class BjsasClient extends HttpClient {
+
+	@Override
+	public Object service() throws Exception {
+		this.doc=this.getHttpContext("http://10.128.192.100:7780/apex/f?p=100:1000");//第一个页面
+		Elements tables = doc.getElementsByTag("table");
+		Element e = tables.get(14);
+		Elements ee = e.getElementsByTag("tr");
+		List<List<String>> lists = new ArrayList<List<String>>();//获取第一个页面所有的位置信息，存入lists中
+		for(int i=1;i<ee.size();i++){
+			Element el = ee.get(i);
+			List<Node> node = el.childNodes();
+			List<String> values = new ArrayList<String>();
+			for(int k=5;k<node.size();k++){
+				Node n = node.get(k);
+				if(n.nodeName().equals("td")){
+					String ss;
+					if(n.childNodeSize()!=0){
+						ss = n.childNode(0).toString();
+						ss.trim();
+					}else{
+						ss="";
+					}
+					values.add(ss);
+				}
+			}
+			lists.add(values);
+		}
+		System.out.println("##############"+lists.size());
+		return null;
+	}
+	
+	public void login(){
+		this.getHttpResponse("http://10.128.192.100:7780/apex/f?p=100:1000")''
+		this.getHttpPostResponse("http://10.128.192.100:7780/apex/wwv_flow.accept");
+	}
+	
+	public void secondPage() throws Exception{
+		this.doc=this.getHttpContext("http://localhost:8080/BJSAS/dataDetail.jsp");//访问第二个页面，每个表的前两行数据输入到控制台
+		Elements tables = doc.getElementsByTag("table");
+		Element UE = tables.get(9);
+		Element Registration  = tables.get(12);
+		Element GPS = tables.get(15);
+		Element Position = tables.get(18);
+		Element CN_Connection = tables.get(21);
+		getData(UE);
+		getData(Registration);
+		getData(GPS);
+		getData(Position);
+		getData(CN_Connection);
+		
+	}
+	
+	/**
+	 * 第二个页面每个表的数据
+	 * @param e
+	 */
+	private void getData(Element e){
+		Elements ee = e.getElementsByTag("table");
+		Element table = ee.get(1);
+		Elements tr = table.getElementsByTag("tr");
+		for(int i=1;i<3;i++){
+			Element value = tr.get(i);
+			List<Node> node = value.childNodes();
+			for(int j=0;j<node.size();j++){
+				Node n = node.get(j);
+				if(n.nodeName().equals("td")||n.nodeName().equals("th")){
+					System.out.println(n.childNode(0).toString());
+				}
+			}
+		}
+		System.out.println(e.nodeName()+"###############"+ee.size());
+	}
+	
+	public static void main(String args[]){
+		BjsasClient client = new BjsasClient();
+		client.login();
+		/*try {
+			client.service();
+			for(int i=0;i<242;i++){
+				System.out.println("this is the "+i+" time");
+				client.secondPage();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
+	}
+
+}

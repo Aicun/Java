@@ -1,0 +1,44 @@
+package com.lac.codility;
+
+import java.util.Stack;
+
+public class CodilityLeader {
+
+	public static void main(String[] args) {
+		int[] a = {2,1,1,1,3};
+		int index = dominator(a);
+		System.out.println(index);		
+	}
+	
+	public static int dominator(int[] a){
+		Stack<Integer> stack = new Stack<Integer>();
+		int length = a.length;
+		int index = -1;
+		for(int i=0;i<length;i++){
+			if(stack.size()==0){
+				stack.push(a[i]);
+			}else{
+				int previous = stack.peek();
+				if(a[i]!=previous){
+					stack.pop();
+				}else{
+					stack.push(a[i]);
+				}
+			}
+		}
+		int count = 0;
+		if(stack.size()>0){
+			int dominator = stack.pop();
+			for(int i=0;i<length;i++){
+				if(a[i]==dominator){
+					index = i;
+					count ++;
+				}
+			}
+			if(count < Math.ceil(length/2)){
+				index = -1;
+			}
+		}
+		return index;
+	}
+}

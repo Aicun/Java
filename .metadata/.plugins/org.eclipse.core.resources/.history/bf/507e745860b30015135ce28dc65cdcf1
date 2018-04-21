@@ -1,0 +1,75 @@
+package bean;
+
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.EnumMap;
+import java.util.Map;
+
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+public class DamageReporter extends JFrame {
+	
+	private JTextField rentalRecord;
+	private JComboBox carType;
+	private JComponent carComponent;
+	private JRadioButton addButton;
+	private JRadioButton removeButton;
+	private DamageReport report;
+	private JFileChooser chooser;
+	
+	private static final int DEFAULT_WIDTH = 400;
+	private static final int DEFAULT_HEIGHT = 400;
+	
+	private static Map<DamageReport.CarType,Shape> shapes = new EnumMap<DamageReport.CarType,Shape>(DamageReport.CarType.class);
+
+	
+	static {
+		int width = 200;
+		int x = 50;
+		int y = 50;
+		
+		Rectangle2D.Double body = new Rectangle2D.Double(x,y+width/6,width-1,width/6);
+		Ellipse2D.Double frontTire = new Ellipse2D.Double(x+width/6,y+width/3,width/6,width/6);
+		Ellipse2D.Double rearTire = new Ellipse2D.Double(x+width*2/3,y+width/3,width/6,width/6);
+		
+		Point2D.Double p1 = new Point2D.Double(x+width/6,y+width/6);
+		Point2D.Double p2 = new Point2D.Double(x+width/3,y);
+		Point2D.Double p3 = new Point2D.Double(x+width*2/3,y);
+		Point2D.Double p4 = new Point2D.Double(x+width*5/6,y+width/6);
+		
+		Line2D.Double frontWindShield = new Line2D.Double(p1,p2);
+		Line2D.Double roofTop = new Line2D.Double(p2,p3);
+		Line2D.Double rearWindShield = new Line2D.Double(p3,p4);
+		
+		GeneralPath sedanPath = new GeneralPath();
+		sedanPath.append(frontTire, false);
+		sedanPath.append(rearTire, false);
+		sedanPath.append(body, false);
+		sedanPath.append(frontWindShield, false);
+		sedanPath.append(roofTop, false);
+		sedanPath.append(rearWindShield, false);
+		
+		shapes.put(DamageReport.CarType.SEDAN, sedanPath);
+	}
+	
+	public static void main(String args[]) {
+		JFrame frame = new DamageReporter();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+	
+	public DamageReporter(){
+		setTitle("DamageReporter");
+		setSize()
+	}
+	
+}

@@ -1,0 +1,18 @@
+package nio;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class ObjectStreamTest {
+
+}
+
+class Employee implements Serializable {
+	
+	private String name;
+	private double salary;
+	private Date hireDay;
+	
+	public Employee(){};
+	
+}

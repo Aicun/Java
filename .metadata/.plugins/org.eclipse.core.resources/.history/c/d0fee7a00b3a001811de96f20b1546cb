@@ -1,0 +1,10 @@
+package com.lac.savinguniverse;
+
+public class SavingTheUniverse {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

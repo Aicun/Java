@@ -1,0 +1,59 @@
+package com.lac.codility;
+
+import java.util.Arrays;
+
+public class CodilitySort {
+
+	public static void main(String[] args) {
+		int a[] = {2,2,2,2};
+		int result = distinct(a);
+		System.out.println(result);
+	}
+	
+	public static int distinct(int[] a){
+		Arrays.sort(a);
+		int length = a.length;
+		int count;
+		if(length==0){
+			count = 0;
+		}else{
+			count = 1;
+			for(int i=1;i<length;i++){
+				if(a[i]!=a[i-1]){
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+	
+	public static int triplet(int []a){
+		int[] maxes = {Integer.MIN_VALUE,Integer.MIN_VALUE,Integer.MIN_VALUE};
+		int[] mins = {Integer.MAX_VALUE,Integer.MAX_VALUE};
+		
+		for(int value: a){
+			if(value>maxes[2]){
+				maxes[0] = maxes[1];
+				maxes[1] = maxes[2];
+				maxes[2] = value;
+			}else if (value > maxes[1]){
+				maxes[0] = maxes[1];
+				maxes[1] = value;
+			}else if(value > maxes[0]){
+				maxes[0] = value;
+			}
+			
+			if(value<mins[0]){
+				mins[1] = mins[0];
+				mins[0] = value;
+			}else if(value<mins[1]){
+				mins[1] = value;
+			}
+		}
+		
+		int positive = maxes[0] * maxes[1] * maxes[2];
+		int negative = mins[0] * mins[1] * maxes[2];
+		int max = Math.max( positive, negative);
+		return max;
+	}
+}

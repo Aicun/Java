@@ -1,0 +1,17 @@
+package com.lac.codility;
+
+import java.util.Arrays;
+
+public class CodilitySort {
+
+	public static void main(String[] args) {
+		
+	}
+	
+	public static int triplet(int []a){
+		Arrays.sort(a);
+		int length = a.length;
+		
+		int result = a[length-1]*a[length-2]*a[length-3];
+		return result;
+}

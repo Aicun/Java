@@ -1,0 +1,11 @@
+package com.lac.spider.db;
+
+import javax.sql.DataSource;
+
+import org.apache.commons.dbutils.QueryRunner;
+
+public class DbManager {
+
+	static DataSource ds = MyDataSource.getDataSource("jdbc:mysql://127.0.0.1:3306/moviedata");
+    static QueryRunner qr = new QueryRunner(ds);
+}

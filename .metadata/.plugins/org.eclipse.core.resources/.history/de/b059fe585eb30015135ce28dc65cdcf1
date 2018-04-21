@@ -1,0 +1,34 @@
+package bean;
+
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+public class DamageReporter extends JFrame {
+	
+	private JTextField rentalRecord;
+	private JComboBox carType;
+	private JComponent carComponent;
+	private JRadioButton addButton;
+	private JRadioButton removeButton;
+	private DamageReport report;
+	private JFileChooser chooser;
+	
+	private static final int DEFAULT_WIDTH = 400;
+	private static final int DEFAULT_HEIGHT = 400;
+
+	public static void main(String args[]) {
+		JFrame frame = new DamageReporter();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+	
+	public DamageReporter(){
+		setTitle("DamageReporter");
+		setSize()
+	}
+	
+}

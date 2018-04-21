@@ -1,0 +1,9 @@
+package com.lac.servicelocator;
+
+public class ServiceLocator {
+
+	private InitialContext context;
+	private Cache cache;
+	
+	
+}

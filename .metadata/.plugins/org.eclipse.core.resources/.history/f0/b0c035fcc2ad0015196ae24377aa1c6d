@@ -1,0 +1,28 @@
+package concurrency.awt;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class AnimateFrame extends JFrame {
+	
+	public AnimateFrame(){
+		ArrayComponent component = new ArrayComponent();
+		add(component,BorderLayout.CENTER);
+		
+		final Sorter sorter = new Sorter(component);
+		
+		JButton runButton = new JButton("run");
+		runButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+			
+		});
+	}
+}

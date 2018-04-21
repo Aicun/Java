@@ -1,0 +1,9 @@
+package concurrency;
+
+public class SimpleThreads {
+	
+	static void threadMessage(String message){
+		
+	}
+
+}

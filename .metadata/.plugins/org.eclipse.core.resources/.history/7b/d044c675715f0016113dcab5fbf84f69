@@ -1,0 +1,11 @@
+package com.lac.state;
+
+public class StartState implements State {
+
+	@Override
+	public void action(Context context) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

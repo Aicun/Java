@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<bundle bundleID="917" class="org.apache.hadoop.eclipse.Activator" localization="plugin" name="MapReduce Tools for Eclipse" project="MapReduceTools">
+		<library name="classes/"/>
+		<library name="lib/commons-cli.jar"/>
+		<library name="lib/commons-httpclient.jar"/>
+		<library name="lib/hadoop-core.jar"/>
+		<library name="lib/jackson-mapper-asl.jar"/>
+		<library name="lib/commons-configuration.jar"/>
+		<library name="lib/commons-lang.jar"/>
+		<library name="lib/jackson-core-asl.jar"/>
+	</bundle>
+</map>

@@ -1,0 +1,32 @@
+import java.util.concurrent.CountDownLatch;
+
+
+public class MultiThread implements Runnable{
+
+	private int start;
+	private int end;
+	
+	public MultiThread(int start,int end,CountDownLatch threadsSignal){
+		this.start = start;
+		this.end = end;
+		this.t
+	}
+	
+	
+	@Override
+	public void run() {
+		for(int i=start;i<end;i++){
+			System.out.println("time is "+i);
+		}
+	}
+	
+	CountDownLatch threadSignal = new CountDownLatch(10);
+	public static void main(String args[]){
+		for(int i=0;i<10;i++){
+			MultiThread t = new MultiThread(i,i+5,threadSignal);
+			Thread thread = new Thread(t);
+			thread.start();
+		}
+		System.out.println("finished! yeah!!");
+	}
+}

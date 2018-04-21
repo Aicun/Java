@@ -1,0 +1,65 @@
+package com.lac.savinguniverse;
+
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
+public class Solution {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(new InputStreamReader(System.in));
+		int t = in.nextInt(); // Scanner has functions to read ints, longs, strings, chars, etc.
+		for (int i = 1; i <= t; ++i) {
+			int n = in.nextInt();
+			String m = in.next();
+			
+			int moves = calculateMoves(n, m);
+			
+			System.out.println("Case #" + i + ": " + moves);
+		}
+	}
+	
+	public static int calculateMoves(int withstand, String program) {
+		
+		int moves = 0;
+		char[] cs = program.toCharArray();
+		
+		moves = moveProgram(cs,moves, withstand);
+		
+		return moves;
+	}
+	
+	private static int moveProgram(char[] cs, int moves, int withstand) {
+		
+		int ps = countRobotShoots(cs);
+		
+		if(ps <= withstand) {
+			return moves;
+		}
+		
+		moves ++;
+		
+		cs = swapAdjacent(cs);
+		
+		return moveProgram(cs, moves, withstand);
+	}
+
+	private static char[] swapAdjacent(char[] cs) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static int countRobotShoots(char[] cs)
+	{
+		int count = 0;
+		int shoot = 1;
+		for (char c : cs) {
+			if(c == 'C') {
+				shoot = shoot *2;
+			}
+			if (c == 'S') {
+				count += shoot;
+			}
+		}
+		return count;
+	}
+}

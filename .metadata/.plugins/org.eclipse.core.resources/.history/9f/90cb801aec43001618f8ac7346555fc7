@@ -1,0 +1,47 @@
+package com.lac.hadoop.advertise;
+
+import java.net.URI;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+import com.lac.hadoop.temperature.partition.RecordPartition;
+
+public class JobRunThird {
+	public static void main(String[] args) {
+		Configuration conf = new Configuration();
+		try {
+			Job job = new Job(conf);
+			job.setJarByClass(JobRunThird.class);
+			job.setJobName("advertise2");
+			job.addCacheFile(new URI("/root/hadoopdir/mapred/system/output1/part-r-00003"));
+			job.addCacheFile(new URI("/root/hadoopdir/mapred/system/output2/part-r-00000"));
+			
+			job.setOutputKeyClass(Text.class);
+			job.setOutputValueClass(Text.class);
+			
+			//job.setNumReduceTasks(4);
+			
+			//job.setPartitionerClass(WordPartition.class);
+			job.setMapperClass(LastMapper.class);
+			job.setReducerClass(LastReducer.class);
+		
+			job.setPartitionerClass(RecordPartition.class);
+			
+			FileInputFormat.addInputPath(job, new Path("/root/hadoopdir/mapred/system/output/"));
+			FileOutputFormat.setOutputPath(job, new Path("/root/hadoopdir/mapred/system/output3/"));
+
+			boolean f = job.waitForCompletion(true);
+			if(f) {
+				System.out.println("finished job");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

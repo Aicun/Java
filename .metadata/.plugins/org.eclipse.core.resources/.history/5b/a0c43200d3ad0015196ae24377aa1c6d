@@ -1,0 +1,42 @@
+package concurrency.awt;
+
+import java.awt.EventQueue;
+import java.util.Random;
+
+import javax.swing.JComboBox;
+
+public class SwingThreadTest {
+	
+	class GoodWorkerRunnable implements Runnable{
+
+		private JComboBox combo;
+		private Random random;
+		
+		public GoodWorkerRunnable(JComboBox combo){
+			this.combo = combo;
+			random = new Random();
+		}
+		
+		@Override
+		public void run() {
+			try {
+				while(true){
+					EventQueue.invokeLater(new Runnable(){
+
+						@Override
+						public void run() {
+							int i = Math.abs(random.nextInt());
+							if(i % 2 == 0) combo.insertItemAt(i, 0);
+							else if (combo.getItemCount()>0) combo.removeItemAt(i%combo.getItemCount());
+						}
+						
+					});
+					Thread.sleep(1);
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+}

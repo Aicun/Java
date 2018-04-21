@@ -1,0 +1,43 @@
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ChinaSoftware extends HttpClient {
+
+	@Override
+	public Object service() throws Exception {
+
+		this.setBaseUrl("http://www.chinasoftware.com.cn/");
+		this.charSet="gb2312";
+		
+		this.url="GGsearch.asp?txtSearch="+URLEncoder.encode(this.getKey(),this.charSet);
+		
+		this.doc=this.getHttpContext(this.url, "测试"+this.getKey());
+		
+		String str="页，每页20条，共";
+		int index = this.doc.toString().indexOf(str);
+	
+		return null;
+	}
+	
+	public void service2()throws Exception{
+		this.setBaseUrl("http://localhost:8080/WebTest/");
+		this.charSet="gb2312";
+		
+		//this.url="GGsearch.asp?txtSearch="+URLEncoder.encode(this.getKey(),this.charSet);
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("username", "abc");
+		map.put("password", "abc");
+		this.getHttpPostResponse(this.url,"",map);
+	}
+	
+	public static void main(String args[]){
+		try {
+			new ChinaSoftware().service2();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}
