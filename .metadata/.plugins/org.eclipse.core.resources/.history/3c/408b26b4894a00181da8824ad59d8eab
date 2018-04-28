@@ -1,0 +1,32 @@
+package com.lac.projecteuler;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Multiply3And5 {
+
+	public static void main(String args[]) {
+		
+	}
+	
+	static long processResult() {
+		int max1 = 1000/3;
+		int max2 = 1000/5;
+		Set<Integer> numbers = new HashSet<>();
+		
+		for(int i=3;i<max1;i++) {
+			numbers.add(i * 3);
+		}
+		
+		for(int j=5;j<max2;j++) {
+			numbers.add(j * 5);
+		}
+		
+		long sum = 0;
+		for (Integer integer : numbers) {
+			sum += integer;
+		}
+		
+		return sum;
+	}
+}

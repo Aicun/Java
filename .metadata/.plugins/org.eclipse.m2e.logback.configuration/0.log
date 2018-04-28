@@ -5403,3 +5403,18 @@ java.io.InvalidClassException: org.eclipse.m2e.core.internal.project.registry.Ba
 2018-04-20 22:38:46,136 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\eclipseProject\springwebflow\src\main\resources
 2018-04-20 22:38:46,138 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2018-04-20 22:38:46,139 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\eclipseProject\springwebflow\src\test\resources
+2018-04-27 22:05:51,493 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2018-04-27 22:06:19,774 [Worker-11] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.lac:spider:0.0.1-SNAPSHOT @ D:\eclipseProject\spider\pom.xml.
+2018-04-27 22:06:26,124 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.restlet.jse:org.restlet:jar:2.0.5 is missing, no dependency information available
+2018-04-27 22:06:26,127 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.restlet.jse:org.restlet.ext.jackson:jar:2.0.5 is missing, no dependency information available
+2018-04-27 22:06:26,448 [Worker-11] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.lac:springwebflow:0.0.1-SNAPSHOT @ D:\eclipseProject\springwebflow\pom.xml.
+2018-04-27 22:06:33,956 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.restlet.jse:org.restlet:jar:2.0.5 is missing, no dependency information available
+2018-04-27 22:06:33,960 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.restlet.jse:org.restlet.ext.jackson:jar:2.0.5 is missing, no dependency information available
+2018-04-27 22:06:34,606 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-04-27 22:06:34,607 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\eclipseProject\spider\src\main\resources
+2018-04-27 22:06:34,610 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-04-27 22:06:34,610 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\eclipseProject\spider\src\test\resources
+2018-04-27 22:06:35,900 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-04-27 22:06:35,901 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\eclipseProject\springwebflow\src\main\resources
+2018-04-27 22:06:35,903 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-04-27 22:06:35,903 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\eclipseProject\springwebflow\src\test\resources
